@@ -1,0 +1,41 @@
+#
+# C Shell style shell environment initialization.
+#
+
+setenv FWTOOLS_HOME @FWTOOLS_HOME@
+
+# Check that the location is correct.
+
+if ! -f $FWTOOLS_HOME/conf/fwtools_env.sh.in then 
+
+  echo 
+  echo FWTOOLS_HOME=$FWTOOLS_HOME, but this does not seem to be correct.
+  echo
+
+else
+
+  if -d $FWTOOLS_HOME/lib64 then
+    setenv SIXTYFOUR 64
+  else
+    setenv SIXTYFOUR ""
+  endif
+
+# Setup Environment Variables for FWTools 
+
+  setenv PROJ_LIB $FWTOOLS_HOME/share/proj
+  setenv GEOTIFF_CSV $FWTOOLS_HOME/share/gdal
+  setenv GDAL_DATA $FWTOOLS_HOME/share/gdal
+  setenv LC_NUMERIC C
+  setenv PATH $FWTOOLS_HOME/bin:$FWTOOLS_HOME/usr/bin:$PATH
+  setenv GDAL_DRIVER_PATH $FWTOOLS_HOME/usr/lib${SIXTYFOUR}/gdalplugins
+  unsetenv PYTHONPATH
+
+  setenv FW_LD $FWTOOLS_HOME/lib${SIXTYFOUR}:$FWTOOLS_HOME/usr/lib${SIXTYFOUR}:$FWTOOLS_HOME/usr/lib${SIXTYFOUR}/ogdi:$FWTOOLS_HOME/usr/lib${SIXTYFOUR}/mysql:$FWTOOLS_HOME/usr/lib${SIXTYFOUR}/atlas-sse:$FWTOOLS_HOME/usr/lib${SIXTYFOUR}/atlas
+
+  if $?LD_LIBRARY_PATH then
+    setenv LD_LIBRARY_PATH ${FW_LD}:${LD_LIBRARY_PATH}:/lib${SIXTYFOUR}
+  else
+    setenv LD_LIBRARY_PATH ${FW_LD}
+  endif
+
+endif

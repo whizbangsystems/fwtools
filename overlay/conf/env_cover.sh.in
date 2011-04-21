@@ -1,0 +1,9 @@
+#!/bin/sh
+
+TARGET=$0
+
+FWTOOLS_HOME=@FWTOOLS_HOME@
+
+. $FWTOOLS_HOME/fwtools_env.sh
+
+$FWTOOLS_HOME/usr/bin/`basename $TARGET` "$@"

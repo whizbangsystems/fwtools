@@ -1,0 +1,68 @@
+	HOWTO Prepare FWTools Binary Distribution
+	=========================================
+
+
+Requirements
+------------
+
+The system is intended to be run on a CentOS / Redhat Enterprise system and
+depends on core packages as well as packages from EPEL and Enterprise Linux
+GIS efforts.  It has been tested on CentOS 5.2 and 5.3 systems so far. 
+
+The scripts should work fine on i686 (32bit) and x86_64 (64bit) architectures.
+Some distinctions are made in the scripts based on which architecture is in 
+use.
+
+
+Get Scripts
+-----------
+
+cvs -d :pserver:cvsanon@cvs.maptools.org:/cvs/maptools/cvsroot login
+(use empty password)
+
+cvs -d :pserver:cvsanon@cvs.maptools.org:/cvs/maptools/cvsroot fwtools/linuxdist
+cd fwtools/linuxdist
+
+
+Setup EPEL and ELGIS Repositories
+---------------------------------
+
+See: http://wiki.osgeo.org/wiki/Enterprise_Linux_GIS
+
+Roughly:
+
+sudo rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm
+sudo rpm -Uvh http://elgis.argeo.org/repos/5/elgis-release-5-5_0.noarch.rpm
+
+
+Install required packages to build GDAL
+---------------------------------------
+
+./setupdev.sh
+
+
+
+Fetch and Configure GDAL
+------------------------
+
+svn co http://svn.osgeo.org/gdal/branches/1.8/gdal
+cd gdal
+../gdal_configure.sh
+cd ..
+
+
+
+Prepare FWTools
+---------------
+
+This step is all that should need to be done for each new release.
+It will refresh rpms, refresh GDAL from svn and refreshes the GDAL
+build. 
+
+edit FW_VERSION as desired.
+
+./full_build.sh
+
+
+Produces FWTools-linux-x86_64-3.0.6.tar.gz
+

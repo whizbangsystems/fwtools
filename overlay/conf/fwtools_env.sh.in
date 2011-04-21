@@ -1,0 +1,32 @@
+#
+# Bourne style shell environment initialization.
+#
+
+FWTOOLS_HOME=@FWTOOLS_HOME@
+
+# Check that the location is correct.
+
+if test \! -f $FWTOOLS_HOME/conf/fwtools_env.sh.in ; then
+  echo 
+  echo FWTOOLS_HOME=$FWTOOLS_HOME, but this does not seem to be correct.
+  echo
+else
+
+  if [ -d $FWTOOLS_HOME/lib64 ] ; then
+    SIXTYFOUR=64
+  fi
+
+# Setup Environment Variables for FWTools 
+
+  PROJ_LIB=$FWTOOLS_HOME/usr/share/proj
+  GEOTIFF_CSV=$FWTOOLS_HOME/usr/share/epsg_csv
+  GDAL_DATA=$FWTOOLS_HOME/usr/share/gdal
+  GDAL_DRIVER_PATH=$FWTOOLS_HOME/usr/lib$SIXTYFOUR/gdalplugins
+  LD_LIBRARY_PATH=${FWTOOLS_HOME}/lib$SIXTYFOUR:${FWTOOLS_HOME}/usr/lib$SIXTYFOUR:${FWTOOLS_HOME}/usr/lib$SIXTYFOUR/mysql:${FWTOOLS_HOME}/usr/lib${SIXTYFOUR}/ogdi:${FWTOOLS_HOME}/usr/lib$SIXTYFOUR/atlas-sse:${FWTOOLS_HOME}/usr/lib$SIXTYFOUR/atlas:${LD_LIBRARY_PATH}:/lib$SIXTYFOUR
+  PATH=${FWTOOLS_HOME}/usr/bin:$PATH
+  LC_NUMERIC=C
+  unset PYTHONPATH
+
+  export PYTHONHOME PYTHONPATH LD_LIBRARY_PATH PATH PROJ_LIB GEOTIFF_CSV LC_NUMERIC GDAL_DATA FWTOOLS_HOME GDAL_DRIVER_PATH
+fi
+
