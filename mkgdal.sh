@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -f gdal/gcore/gdal_version.h
-(cd gdal ; svn update)
+(cd gdal ; git pull origin master)
 
 # set gdal_version.h
 python fwpreinstall.py
@@ -20,9 +20,5 @@ cd ..
 cp gdal/swig/python/scripts/*.py tree/usr/bin
 
 # java version!
-(cd gdal/swig/java ; make clean ; /usr/bin/python setup.py build)
-(cd gdal/swig/java ; ../../../tree/usr/bin/python setup.py install)
-cp gdal/swig/python/scripts/*.py tree/usr/bin
-
-# We have to write java.opt, here, with a totally custom file! We're just going to force a 64-bit biznazz.
-# 
+(cd gdal/swig/java ; make clean ; make)
+cp gdal/swig/java/*.so tree/usr/native
